@@ -17,10 +17,9 @@ import {
   Eye,
   EyeOff,
   GraduationCap,
-  Sparkles,
-  ShieldCheck,
   ArrowRight,
 } from "lucide-react";
+import { MentAllyLogo } from "./MentAllyLogo";
 
 interface AuthScreenProps {
   onSuccess?: () => void;
@@ -161,40 +160,42 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
   };
 
   return (
-    <div className="min-h-[85vh] flex items-center justify-center p-3 sm:p-6">
-      <div className="w-full max-w-md bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
-        {/* Header Branding Banner */}
-        <div className="bg-gradient-to-br from-teal-900 via-teal-800 to-emerald-900 text-white p-6 sm:p-8 text-center relative overflow-hidden">
-          <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 rounded-full bg-teal-600/20 blur-2xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 -ml-8 -mb-8 w-32 h-32 rounded-full bg-emerald-500/20 blur-2xl pointer-events-none" />
-
-          <div className="relative z-10 flex flex-col items-center">
-            <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-inner mb-3">
-              <Heart className="w-6 h-6 text-teal-300 fill-teal-300/40" />
+    <div className="w-full flex items-center justify-center py-2 sm:py-6 px-1 sm:px-0">
+      <div className="w-full max-w-sm sm:max-w-md bg-white rounded-3xl border border-slate-200/80 shadow-xl shadow-slate-200/50 overflow-hidden transition-all">
+        {/* Remodeled Professional MentAlly Header */}
+        <div className="bg-gradient-to-b from-teal-50/90 via-emerald-50/30 to-white pt-7 pb-5 px-5 sm:px-8 text-center border-b border-slate-100 relative">
+          <div className="flex flex-col items-center">
+            {/* Modern MentAlly Brand Logo */}
+            <div className="mb-3.5 hover:scale-105 transition-transform">
+              <MentAllyLogo size="lg" />
             </div>
 
+            {/* Brand Name & PTC Badge */}
             <div className="flex items-center gap-2 mb-1">
-              <h2 className="text-2xl font-black tracking-tight text-white">MentAlly</h2>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 bg-teal-700/80 text-teal-200 rounded-full border border-teal-600/60">
+              <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900">
+                Ment<span className="text-teal-700">Ally</span>
+              </h2>
+              <span className="text-[10px] uppercase font-black tracking-wider px-2 py-0.5 bg-teal-100 text-teal-800 rounded-md border border-teal-200">
                 PTC
               </span>
             </div>
 
-            <p className="text-xs text-teal-100/90 font-medium max-w-xs leading-relaxed">
+            {/* Subtitle */}
+            <p className="text-xs text-slate-600 font-medium max-w-xs leading-relaxed">
               Student Mental Wellness & Academic Self-Care Platform
             </p>
 
-            <div className="mt-3 flex items-center gap-1.5 text-[11px] text-teal-200/80 font-medium">
-              <GraduationCap className="w-3.5 h-3.5" />
+            <div className="mt-2.5 flex items-center gap-1.5 text-[11px] text-teal-800 font-semibold bg-teal-50 px-2.5 py-1 rounded-full border border-teal-200/60">
+              <GraduationCap className="w-3.5 h-3.5 text-teal-600" />
               <span>Pateros Technological College</span>
             </div>
           </div>
         </div>
 
         {/* Auth Body */}
-        <div className="p-6 sm:p-8 space-y-5">
-          {/* Tab Switcher */}
-          <div className="grid grid-cols-2 p-1 bg-slate-100 rounded-2xl border border-slate-200/80">
+        <div className="p-4 sm:p-7 space-y-4">
+          {/* Segmented Mode Switcher */}
+          <div className="grid grid-cols-2 p-1 bg-slate-100/90 rounded-xl border border-slate-200/80 min-h-[44px]">
             <button
               id="auth-tab-login"
               type="button"
@@ -203,7 +204,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
                 setErrorMsg(null);
                 setSuccessMsg(null);
               }}
-              className={`py-2.5 text-xs font-bold rounded-xl transition-all ${
+              className={`py-2 px-3 text-xs font-bold rounded-lg transition-all min-h-[38px] flex items-center justify-center active:scale-95 ${
                 mode === "login"
                   ? "bg-white text-slate-900 shadow-xs"
                   : "text-slate-500 hover:text-slate-800"
@@ -219,7 +220,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
                 setErrorMsg(null);
                 setSuccessMsg(null);
               }}
-              className={`py-2.5 text-xs font-bold rounded-xl transition-all ${
+              className={`py-2 px-3 text-xs font-bold rounded-lg transition-all min-h-[38px] flex items-center justify-center active:scale-95 ${
                 mode === "register"
                   ? "bg-white text-slate-900 shadow-xs"
                   : "text-slate-500 hover:text-slate-800"
@@ -231,16 +232,16 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
 
           {/* Feedback Alerts */}
           {errorMsg && (
-            <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-medium flex items-start gap-2.5 leading-relaxed">
+            <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-medium flex items-start gap-2.5 leading-relaxed">
               <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
-              <span>{errorMsg}</span>
+              <span className="flex-1">{errorMsg}</span>
             </div>
           )}
 
           {successMsg && (
-            <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium flex items-start gap-2.5 leading-relaxed">
+            <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium flex items-start gap-2.5 leading-relaxed">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-              <span>{successMsg}</span>
+              <span className="flex-1">{successMsg}</span>
             </div>
           )}
 
@@ -250,9 +251,9 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
             type="button"
             disabled={isLoading}
             onClick={handleGoogleSignIn}
-            className="w-full py-3 px-4 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-semibold text-xs transition-all flex items-center justify-center gap-3 shadow-xs active:scale-[0.99] disabled:opacity-50"
+            className="w-full min-h-[44px] py-2.5 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 active:bg-slate-100 text-slate-700 font-semibold text-xs sm:text-sm transition-all flex items-center justify-center gap-2.5 shadow-2xs active:scale-[0.99] disabled:opacity-50"
           >
-            {/* Real Official Google SVG Icon */}
+            {/* Google SVG Icon */}
             <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
               <path
                 fill="#4285F4"
@@ -274,10 +275,11 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
             <span>Continue with Google / Gmail</span>
           </button>
 
-          <div className="relative flex items-center justify-center my-4">
+          {/* Clean Divider without wrapping bugs */}
+          <div className="relative flex items-center justify-center py-1">
             <div className="border-t border-slate-200 w-full" />
-            <span className="bg-white px-3 text-[11px] text-slate-400 font-bold uppercase tracking-wider">
-              or use student email
+            <span className="bg-white px-3 text-[10px] text-slate-400 font-bold uppercase tracking-wider whitespace-nowrap">
+              or continue with email
             </span>
           </div>
 
@@ -285,11 +287,11 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
           <form onSubmit={handleEmailAuth} className="space-y-3.5">
             {mode === "register" && (
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
                   Full Name / Nickname
                 </label>
                 <div className="relative">
-                  <UserIcon className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <UserIcon className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                   <input
                     id="auth-register-fullname"
                     type="text"
@@ -297,18 +299,18 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
                     placeholder="e.g., Franklin Luzano"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-slate-800"
+                    className="w-full min-h-[44px] pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-slate-800 bg-slate-50/40 focus:bg-white transition-colors"
                   />
                 </div>
               </div>
             )}
 
             <div>
-              <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
                 Email Address
               </label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
                   id="auth-input-email"
                   type="email"
@@ -316,13 +318,13 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
                   placeholder="student@pateros.edu.ph or gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-slate-800"
+                  className="w-full min-h-[44px] pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-slate-800 bg-slate-50/40 focus:bg-white transition-colors"
                 />
               </div>
             </div>
 
             <div>
-              <div className="flex items-center justify-between mb-1.5">
+              <div className="flex items-center justify-between mb-1">
                 <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider">
                   Password
                 </label>
@@ -333,14 +335,14 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
                       setForgotEmail(email);
                       setIsForgotModalOpen(true);
                     }}
-                    className="text-[11px] font-semibold text-teal-700 hover:text-teal-800 hover:underline"
+                    className="text-[11px] font-semibold text-teal-700 hover:text-teal-800 hover:underline py-1 px-1 -mr-1"
                   >
                     Forgot?
                   </button>
                 )}
               </div>
               <div className="relative">
-                <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
                   id="auth-input-password"
                   type={showPassword ? "text" : "password"}
@@ -348,12 +350,14 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-slate-800"
+                  className="w-full min-h-[44px] pl-10 pr-11 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-slate-800 bg-slate-50/40 focus:bg-white transition-colors"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-2 transition-colors min-h-[36px] min-w-[36px] flex items-center justify-center rounded-lg"
+                  tabIndex={-1}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -362,11 +366,11 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
 
             {mode === "register" && (
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
                   Confirm Password
                 </label>
                 <div className="relative">
-                  <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                   <input
                     id="auth-input-confirm-password"
                     type={showPassword ? "text" : "password"}
@@ -374,7 +378,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
                     placeholder="••••••••"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-slate-800"
+                    className="w-full min-h-[44px] pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-slate-800 bg-slate-50/40 focus:bg-white transition-colors"
                   />
                 </div>
               </div>
@@ -384,24 +388,18 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
               id="auth-submit-btn"
               type="submit"
               disabled={isLoading}
-              className="w-full mt-2 py-3 px-4 rounded-xl bg-gradient-to-r from-teal-700 to-emerald-600 hover:from-teal-800 hover:to-emerald-700 text-white font-bold text-xs shadow-md shadow-teal-700/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.99]"
+              className="w-full min-h-[46px] mt-3 py-3 px-4 rounded-xl bg-teal-700 hover:bg-teal-800 active:bg-teal-900 text-white font-bold text-xs sm:text-sm shadow-md shadow-teal-700/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.99]"
             >
               {isLoading ? (
                 <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
                 <>
                   <span>{mode === "login" ? "Sign In to MentAlly" : "Create My Student Account"}</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-4 h-4" />
                 </>
               )}
             </button>
           </form>
-
-          {/* Privacy Footnote */}
-          <div className="pt-2 border-t border-slate-100 flex items-center justify-center gap-1.5 text-[10px] text-slate-400">
-            <ShieldCheck className="w-3.5 h-3.5 text-teal-600 shrink-0" />
-            <span>Securely authenticated via Google Firebase. Privacy assured.</span>
-          </div>
         </div>
       </div>
 

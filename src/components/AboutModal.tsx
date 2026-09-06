@@ -1,5 +1,6 @@
 import React from "react";
 import { X, GraduationCap, FileText, Heart, ShieldCheck, BookOpen } from "lucide-react";
+import { PTCLogo } from "./PTCLogo";
 
 interface AboutModalProps {
   isOpen: boolean;
@@ -18,9 +19,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onReset
       >
         <div className="bg-teal-700 text-white px-6 py-5 flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center">
-              <GraduationCap className="w-6 h-6" />
-            </div>
+            <PTCLogo size="md" className="bg-white rounded-full p-0.5 shadow-xs" />
             <div>
               <span className="text-[10px] uppercase font-bold tracking-wider text-teal-200">
                 Pateros Technological College
@@ -51,7 +50,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onReset
               </div>
               <div>
                 <strong className="block text-slate-900">Institution:</strong>
-                <span>Pateros Technological College (IICT)</span>
+                <span>Pateros Technological College (PTC)</span>
               </div>
               <div className="col-span-2">
                 <strong className="block text-slate-900">Degree:</strong>

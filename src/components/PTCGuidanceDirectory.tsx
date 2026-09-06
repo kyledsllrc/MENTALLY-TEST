@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   Search
 } from "lucide-react";
+import { PTCLogo } from "./PTCLogo";
 import { PTC_RESOURCES, PTC_CAMPUS_INFO } from "../data/ptcData";
 import { PTCCampusResource } from "../types";
 
@@ -74,15 +75,18 @@ Pateros Technological College`;
       {/* Institution Banner */}
       <div className="bg-gradient-to-br from-teal-900 via-teal-800 to-slate-900 text-white rounded-2xl p-6 shadow-xs relative overflow-hidden">
         <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="space-y-1.5">
-            <div className="flex items-center gap-2 text-teal-300 text-xs font-bold uppercase tracking-wider">
-              <GraduationCap className="w-4 h-4" />
-              <span>Campus Wellness Network</span>
+          <div className="flex items-center gap-3.5">
+            <PTCLogo size="md" className="bg-white rounded-full p-0.5 shadow-md shrink-0" />
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 text-teal-300 text-xs font-bold uppercase tracking-wider">
+                <GraduationCap className="w-4 h-4" />
+                <span>Campus Wellness Network</span>
+              </div>
+              <h3 className="text-xl font-black tracking-tight">{PTC_CAMPUS_INFO.institution}</h3>
+              <p className="text-xs text-teal-100/90 max-w-xl leading-relaxed">
+                {PTC_CAMPUS_INFO.institute} • {PTC_CAMPUS_INFO.address}
+              </p>
             </div>
-            <h3 className="text-xl font-black tracking-tight">{PTC_CAMPUS_INFO.institution}</h3>
-            <p className="text-xs text-teal-100/90 max-w-xl leading-relaxed">
-              {PTC_CAMPUS_INFO.institute} • {PTC_CAMPUS_INFO.address}
-            </p>
           </div>
 
           <button

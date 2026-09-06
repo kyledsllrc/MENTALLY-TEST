@@ -43,6 +43,7 @@ import {
   fetchJournalsFromFirestore,
 } from "./lib/firestoreService";
 import { AuthScreen } from "./components/AuthScreen";
+import { MentAllyLogo } from "./components/MentAllyLogo";
 
 export type MainTab = 
   | "dashboard" 
@@ -294,13 +295,11 @@ export default function App() {
   if (isAuthLoading) {
     return (
       <div className="min-h-screen bg-slate-100 flex flex-col items-center justify-center p-4">
-        <div className="flex flex-col items-center gap-3 bg-white p-8 rounded-3xl border border-slate-200 shadow-xl max-w-xs text-center animate-in fade-in">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-teal-600 to-emerald-500 flex items-center justify-center text-white shadow-md">
-            <Heart className="w-6 h-6 fill-white animate-pulse" />
-          </div>
+        <div className="flex flex-col items-center gap-3.5 bg-white p-8 rounded-3xl border border-slate-200 shadow-xl max-w-xs text-center animate-in fade-in">
+          <MentAllyLogo size="lg" className="animate-pulse" />
           <div>
             <h3 className="text-base font-bold text-slate-900">MentAlly</h3>
-            <p className="text-xs text-slate-500 font-medium">Connecting to your Firebase account...</p>
+            <p className="text-xs text-slate-500 font-medium">Connecting to your account...</p>
           </div>
           <div className="w-6 h-6 border-2 border-teal-600/30 border-t-teal-600 rounded-full animate-spin mt-1" />
         </div>
@@ -380,147 +379,147 @@ export default function App() {
 
           {/* Tab Navigation Pill Bar (Scrollable on smaller screens) */}
           <div className="px-1 sm:px-0 mb-4 sm:mb-6">
-            <nav className="flex items-center gap-1 bg-white p-1 sm:p-1.5 rounded-2xl border border-slate-200 overflow-x-auto shadow-2xs scrollbar-none touch-pan-x">
+            <nav className="flex items-center gap-1.5 bg-white p-1.5 rounded-2xl border border-slate-200 overflow-x-auto shadow-2xs scrollbar-none touch-pan-x">
               <button
                 id="nav-tab-dashboard"
                 onClick={() => setActiveTab("dashboard")}
-                className={`shrink-0 flex items-center justify-center gap-1.5 py-1.5 sm:py-2 px-2.5 sm:px-3.5 rounded-xl text-[11px] sm:text-xs font-bold transition-all whitespace-nowrap ${
+                className={`shrink-0 flex items-center justify-center gap-1.5 py-2 px-3 sm:px-3.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap min-h-[40px] active:scale-95 ${
                   activeTab === "dashboard"
                     ? "bg-teal-600 text-white shadow-xs"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                 }`}
               >
-                <Home className="w-3.5 h-3.5" />
+                <Home className="w-4 h-4" />
                 <span>Dashboard</span>
               </button>
 
               <button
                 id="nav-tab-mood"
                 onClick={() => setActiveTab("mood")}
-                className={`shrink-0 flex items-center justify-center gap-1.5 py-1.5 sm:py-2 px-2.5 sm:px-3.5 rounded-xl text-[11px] sm:text-xs font-bold transition-all whitespace-nowrap ${
+                className={`shrink-0 flex items-center justify-center gap-1.5 py-2 px-3 sm:px-3.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap min-h-[40px] active:scale-95 ${
                   activeTab === "mood"
                     ? "bg-teal-600 text-white shadow-xs"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                 }`}
               >
-                <Heart className="w-3.5 h-3.5" />
+                <Heart className="w-4 h-4" />
                 <span>Mood Track</span>
               </button>
 
               <button
                 id="nav-tab-journal"
                 onClick={() => setActiveTab("journal")}
-                className={`shrink-0 flex items-center justify-center gap-1.5 py-1.5 sm:py-2 px-2.5 sm:px-3.5 rounded-xl text-[11px] sm:text-xs font-bold transition-all whitespace-nowrap ${
+                className={`shrink-0 flex items-center justify-center gap-1.5 py-2 px-3 sm:px-3.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap min-h-[40px] active:scale-95 ${
                   activeTab === "journal"
                     ? "bg-teal-600 text-white shadow-xs"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                 }`}
               >
-                <BookOpen className="w-3.5 h-3.5" />
+                <BookOpen className="w-4 h-4" />
                 <span>Journal</span>
               </button>
 
               <button
                 id="nav-tab-screener"
                 onClick={() => setActiveTab("screener")}
-                className={`shrink-0 flex items-center justify-center gap-1.5 py-1.5 sm:py-2 px-2.5 sm:px-3.5 rounded-xl text-[11px] sm:text-xs font-bold transition-all whitespace-nowrap ${
+                className={`shrink-0 flex items-center justify-center gap-1.5 py-2 px-3 sm:px-3.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap min-h-[40px] active:scale-95 ${
                   activeTab === "screener"
                     ? "bg-teal-600 text-white shadow-xs"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                 }`}
               >
-                <ClipboardCheck className="w-3.5 h-3.5" />
+                <ClipboardCheck className="w-4 h-4" />
                 <span>Screeners</span>
               </button>
 
               <button
                 id="nav-tab-cbt"
                 onClick={() => setActiveTab("cbt")}
-                className={`shrink-0 flex items-center justify-center gap-1.5 py-1.5 sm:py-2 px-2.5 sm:px-3.5 rounded-xl text-[11px] sm:text-xs font-bold transition-all whitespace-nowrap ${
+                className={`shrink-0 flex items-center justify-center gap-1.5 py-2 px-3 sm:px-3.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap min-h-[40px] active:scale-95 ${
                   activeTab === "cbt"
                     ? "bg-teal-600 text-white shadow-xs"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                 }`}
               >
-                <BrainCircuit className="w-3.5 h-3.5" />
+                <BrainCircuit className="w-4 h-4" />
                 <span>CBT Reframe</span>
               </button>
 
               <button
                 id="nav-tab-habits"
                 onClick={() => setActiveTab("habits")}
-                className={`shrink-0 flex items-center justify-center gap-1.5 py-1.5 sm:py-2 px-2.5 sm:px-3.5 rounded-xl text-[11px] sm:text-xs font-bold transition-all whitespace-nowrap ${
+                className={`shrink-0 flex items-center justify-center gap-1.5 py-2 px-3 sm:px-3.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap min-h-[40px] active:scale-95 ${
                   activeTab === "habits"
                     ? "bg-teal-600 text-white shadow-xs"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                 }`}
               >
-                <Moon className="w-3.5 h-3.5" />
+                <Moon className="w-4 h-4" />
                 <span>Sleep & Habits</span>
               </button>
 
               <button
                 id="nav-tab-activities"
                 onClick={() => setActiveTab("activities")}
-                className={`shrink-0 flex items-center justify-center gap-1.5 py-1.5 sm:py-2 px-2.5 sm:px-3.5 rounded-xl text-[11px] sm:text-xs font-bold transition-all whitespace-nowrap ${
+                className={`shrink-0 flex items-center justify-center gap-1.5 py-2 px-3 sm:px-3.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap min-h-[40px] active:scale-95 ${
                   activeTab === "activities"
                     ? "bg-teal-600 text-white shadow-xs"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                 }`}
               >
-                <Wind className="w-3.5 h-3.5" />
+                <Wind className="w-4 h-4" />
                 <span>Self-Care</span>
               </button>
 
               <button
                 id="nav-tab-meditation"
                 onClick={() => setActiveTab("meditation")}
-                className={`shrink-0 flex items-center justify-center gap-1.5 py-1.5 sm:py-2 px-2.5 sm:px-3.5 rounded-xl text-[11px] sm:text-xs font-bold transition-all whitespace-nowrap ${
+                className={`shrink-0 flex items-center justify-center gap-1.5 py-2 px-3 sm:px-3.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap min-h-[40px] active:scale-95 ${
                   activeTab === "meditation"
                     ? "bg-teal-600 text-white shadow-xs"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                 }`}
               >
-                <Headphones className="w-3.5 h-3.5" />
+                <Headphones className="w-4 h-4" />
                 <span>Voice Meditation</span>
               </button>
 
               <button
                 id="nav-tab-ptc"
                 onClick={() => setActiveTab("ptc")}
-                className={`shrink-0 flex items-center justify-center gap-1.5 py-1.5 sm:py-2 px-2.5 sm:px-3.5 rounded-xl text-[11px] sm:text-xs font-bold transition-all whitespace-nowrap ${
+                className={`shrink-0 flex items-center justify-center gap-1.5 py-2 px-3 sm:px-3.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap min-h-[40px] active:scale-95 ${
                   activeTab === "ptc"
                     ? "bg-teal-600 text-white shadow-xs"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                 }`}
               >
-                <Building2 className="w-3.5 h-3.5" />
+                <Building2 className="w-4 h-4" />
                 <span>PTC Guidance</span>
               </button>
 
               <button
                 id="nav-tab-ai"
                 onClick={() => setActiveTab("ai")}
-                className={`shrink-0 flex items-center justify-center gap-1.5 py-1.5 sm:py-2 px-2.5 sm:px-3.5 rounded-xl text-[11px] sm:text-xs font-bold transition-all whitespace-nowrap ${
+                className={`shrink-0 flex items-center justify-center gap-1.5 py-2 px-3 sm:px-3.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap min-h-[40px] active:scale-95 ${
                   activeTab === "ai"
                     ? "bg-teal-600 text-white shadow-xs"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                 }`}
               >
-                <Bot className="w-3.5 h-3.5" />
+                <Bot className="w-4 h-4" />
                 <span>AI Companion</span>
               </button>
 
               <button
                 id="nav-tab-reports"
                 onClick={() => setActiveTab("reports")}
-                className={`shrink-0 flex items-center justify-center gap-1.5 py-1.5 sm:py-2 px-2.5 sm:px-3.5 rounded-xl text-[11px] sm:text-xs font-bold transition-all whitespace-nowrap ${
+                className={`shrink-0 flex items-center justify-center gap-1.5 py-2 px-3 sm:px-3.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap min-h-[40px] active:scale-95 ${
                   activeTab === "reports"
                     ? "bg-teal-600 text-white shadow-xs"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                 }`}
               >
-                <BarChart3 className="w-3.5 h-3.5" />
+                <BarChart3 className="w-4 h-4" />
                 <span>Reports</span>
               </button>
             </nav>
