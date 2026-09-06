@@ -55,3 +55,46 @@ export interface EmergencyContact {
   availability: string;
   isTollFree?: boolean;
 }
+
+export interface ScreenerResult {
+  id: string;
+  type: "PHQ-9" | "GAD-7";
+  timestamp: string;
+  score: number;
+  severity: string;
+  interpretation: string;
+  recommendation: string;
+  answers: number[];
+}
+
+export interface CBTThoughtRecord {
+  id: string;
+  timestamp: string;
+  situation: string;
+  automaticThought: string;
+  emotion: string;
+  cognitiveDistortion: string;
+  evidenceAgainst: string;
+  balancedThought: string;
+  outcomeEmotion: string;
+}
+
+export interface DailyHabitLog {
+  date: string;
+  sleepHours: number;
+  waterGlasses: number;
+  studyBreaksTaken: number;
+  academicStressLevel: number;
+}
+
+export interface PTCCampusResource {
+  id: string;
+  title: string;
+  department: string;
+  location: string;
+  contactEmail: string;
+  contactNumber: string;
+  hours: string;
+  services: string[];
+  notes: string;
+}

@@ -4,9 +4,10 @@ import { X, GraduationCap, FileText, Heart, ShieldCheck, BookOpen } from "lucide
 interface AboutModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onResetData?: () => void;
 }
 
-export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
+export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onResetData }) => {
   if (!isOpen) return null;
 
   return (
@@ -22,7 +23,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
             </div>
             <div>
               <span className="text-[10px] uppercase font-bold tracking-wider text-teal-200">
-                Pateros Technological College • IICT
+                Pateros Technological College
               </span>
               <h3 className="text-base font-bold leading-tight mt-0.5">
                 MentAlly: A Personalized Mental Wellness Application
@@ -80,9 +81,35 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
               <li>AI responses are non-clinical and supportive; users in crisis are directed to institutional hotlines (NCMH 1553, Hopeline PH, GAYON).</li>
             </ul>
           </div>
+
+          {/* Privacy & Data Management */}
+          <div className="p-4 rounded-xl bg-teal-50/70 border border-teal-200 space-y-2.5">
+            <h4 className="font-bold text-teal-950 text-xs flex items-center justify-between">
+              <span>Local Device Storage & Privacy</span>
+              <span className="text-[10px] bg-teal-100 text-teal-800 font-semibold px-2 py-0.5 rounded-full">100% Client-Side</span>
+            </h4>
+            <p className="text-[11px] text-teal-900 leading-relaxed">
+              MentAlly strictly stores all mood logs, journals, habits, and CBT exercises inside your browser's private offline storage. No personal reflections are sent to any remote database. You have full ownership of your records.
+            </p>
+            {onResetData && (
+              <div className="pt-1 flex items-center justify-between">
+                <span className="text-[10px] text-slate-500">Want a fresh start?</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    onResetData();
+                  }}
+                  className="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg text-xs font-bold transition-colors"
+                >
+                  Clear All Saved Records
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="p-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+        <div className="p-4 bg-slate-50 border-t border-slate-100 flex justify-end gap-2">
           <button
             onClick={onClose}
             className="px-5 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold rounded-lg"

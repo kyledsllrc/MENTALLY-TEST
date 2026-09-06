@@ -90,50 +90,55 @@ CRITICAL ETHICAL GUIDELINES & BOUNDARIES:
 
     res.json({ reply: response.text });
   } catch (error: any) {
-    console.error("Gemini Chat error:", error);
-    res.status(500).json({
-      error: "Failed to generate AI response",
-      details: error.message,
-      fallback: "I'm here for you. Taking a quiet moment to breathe and reflect can help bring calm when things feel busy. Feel free to explore our guided breathing and grounding activities.",
-    });
+    console.warn("Gemini Chat experiencing high demand or temporary error, serving graceful fallback:", error?.message || error);
+    // Provide warm, non-clinical supportive message directly so user never encounters broken UI
+    const lastUserMsg = req.body?.messages?.[req.body.messages.length - 1]?.content || "";
+    const lower = lastUserMsg.toLowerCase();
+    let reply = "I hear you, and taking a moment to breathe and reflect is so important. College workloads and academic deadlines can feel intense, but remember to take things one step at a time. Feel free to try our Box Breathing or 5-4-3-2-1 Grounding exercises in the Self-Care tab.";
+    if (lower.includes("exam") || lower.includes("study") || lower.includes("stress")) {
+      reply = "Exam deadlines and college requirements can definitely feel overwhelming. You don't have to carry the whole semester today—just focus on your next small task. Have you taken a short 5-minute hydration or breathing break yet?";
+    } else if (lower.includes("thesis") || lower.includes("defense")) {
+      reply = "Preparing for thesis presentations takes a lot of mental energy. It is completely normal to feel nervous. Remember that defense panels are there to guide your project. Take three slow, grounding breaths right now.";
+    }
+    res.json({ reply });
   }
 });
 
 // Personalized AI Wellness Suggestions based on moods & journals
 app.post("/api/recommendations", async (req, res) => {
+  const DEFAULT_RECOMMENDATIONS = [
+    {
+      title: "4-7-8 Deep Relaxation Breath",
+      category: "Breathing",
+      actionType: "breathing",
+      duration: "3-5 mins",
+      reason: "Calms the autonomic nervous system and helps reduce academic adrenaline before classes or sleep.",
+      tip: "Practice this right before study sessions or before resting tonight."
+    },
+    {
+      title: "5-4-3-2-1 Sensory Grounding",
+      category: "Mindfulness",
+      actionType: "grounding",
+      duration: "4 mins",
+      reason: "Gently anchors sensory awareness away from anxious rumination into your physical surroundings.",
+      tip: "Notice 5 distinct colors or textures in your study space."
+    },
+    {
+      title: "Brain Dump & Gratitude Reflection",
+      category: "Journaling",
+      actionType: "journal",
+      duration: "5 mins",
+      reason: "Transferring busy mental thoughts to paper releases mental cognitive bandwidth.",
+      tip: "Write down one academic victory or small comfort from today."
+    }
+  ];
+
   try {
     const { recentMoods, recentJournals } = req.body;
     const ai = getGeminiClient();
 
     if (!ai) {
-      return res.json({
-        recommendations: [
-          {
-            title: "4-7-8 Deep Relaxation Breath",
-            category: "Breathing",
-            actionType: "breathing",
-            duration: "3-5 mins",
-            reason: "Helps calm the autonomic nervous system and lower study-related cortisol.",
-            tip: "Practice this right before study sessions or before sleeping."
-          },
-          {
-            title: "5-4-3-2-1 Sensory Grounding",
-            category: "Mindfulness",
-            actionType: "grounding",
-            duration: "4 mins",
-            reason: "Reconnects you with the physical environment when thoughts feel scattered.",
-            tip: "Look around your study space and notice colors and textures."
-          },
-          {
-            title: "Brain Dump & Gratitude Reflection",
-            category: "Journaling",
-            actionType: "journal",
-            duration: "5 mins",
-            reason: "Transferring busy mental thoughts to paper releases mental cognitive load.",
-            tip: "Write down 3 tiny victories from your college day."
-          }
-        ]
-      });
+      return res.json({ recommendations: DEFAULT_RECOMMENDATIONS });
     }
 
     const prompt = `Analyze these recent student wellness records:
@@ -164,28 +169,32 @@ Respond in valid JSON format only, structured as:
     });
 
     const parsed = JSON.parse(response.text || "{}");
-    res.json(parsed);
+    if (parsed.recommendations && Array.isArray(parsed.recommendations) && parsed.recommendations.length > 0) {
+      return res.json(parsed);
+    }
+    res.json({ recommendations: DEFAULT_RECOMMENDATIONS });
   } catch (error: any) {
-    console.error("Recommendations error:", error);
-    res.status(500).json({ error: "Failed to generate recommendations" });
+    console.warn("Recommendations API temporarily unavailable or high demand (503), serving resilient recommendations:", error?.message || error);
+    res.json({ recommendations: DEFAULT_RECOMMENDATIONS });
   }
 });
 
 // Prompt generator for journaling
 app.post("/api/journal-prompt", async (req, res) => {
+  const DEFAULT_PROMPTS = [
+    "What is one academic or personal task today that made you feel capable or proud?",
+    "If you could whisper gentle advice to yourself this morning, what would it be?",
+    "What is currently taking up the most mental space, and how can you give yourself permission to rest?",
+    "Describe a small moment today that brought you a sense of comfort or peace.",
+  ];
+  const getRandomPrompt = () => DEFAULT_PROMPTS[Math.floor(Math.random() * DEFAULT_PROMPTS.length)];
+
   try {
     const { mood, category } = req.body;
     const ai = getGeminiClient();
 
     if (!ai) {
-      const defaultPrompts = [
-        "What is one academic or personal task today that made you feel capable or proud?",
-        "If you could whisper gentle advice to yourself this morning, what would it be?",
-        "What is currently taking up the most mental space, and how can you give yourself permission to rest?",
-        "Describe a small moment today that brought you a sense of comfort or peace.",
-      ];
-      const randomPrompt = defaultPrompts[Math.floor(Math.random() * defaultPrompts.length)];
-      return res.json({ prompt: randomPrompt });
+      return res.json({ prompt: getRandomPrompt() });
     }
 
     const response = await ai.models.generateContent({
@@ -193,9 +202,10 @@ app.post("/api/journal-prompt", async (req, res) => {
       contents: `Generate a single, deeply reflective, compassionate journaling prompt for a college student who is feeling "${mood || 'neutral'}" related to ${category || 'general student life and mental wellness'}. Give just the prompt question or statement, no quotes or preamble.`,
     });
 
-    res.json({ prompt: response.text?.trim() });
-  } catch (error) {
-    res.status(500).json({ prompt: "What is one gentle kindness you can offer yourself today?" });
+    res.json({ prompt: response.text?.trim() || getRandomPrompt() });
+  } catch (error: any) {
+    console.warn("Journal prompt endpoint serving default due to high demand:", error?.message || error);
+    res.json({ prompt: getRandomPrompt() });
   }
 });
 

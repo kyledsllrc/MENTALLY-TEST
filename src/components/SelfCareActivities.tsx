@@ -106,6 +106,15 @@ export const SelfCareActivities: React.FC<SelfCareActivitiesProps> = ({
   const currentPhases = TECHNIQUES[technique].phases;
   const currentPhase = currentPhases[phaseIndex];
 
+  const phaseIndexRef = useRef(phaseIndex);
+  phaseIndexRef.current = phaseIndex;
+
+  const secondsLeftRef = useRef(secondsLeftInPhase);
+  secondsLeftRef.current = secondsLeftInPhase;
+
+  const onActivityCompletedRef = useRef(onActivityCompleted);
+  onActivityCompletedRef.current = onActivityCompleted;
+
   useEffect(() => {
     if (!isBreathing) {
       if (timerRef.current) clearInterval(timerRef.current);
@@ -113,33 +122,35 @@ export const SelfCareActivities: React.FC<SelfCareActivitiesProps> = ({
     }
 
     timerRef.current = setInterval(() => {
-      setSecondsLeftInPhase((prev) => {
-        if (prev <= 1) {
-          // Advance phase
-          const nextIndex = (phaseIndex + 1) % currentPhases.length;
-          if (nextIndex === 0) {
-            setCompletedCycles((c) => {
-              const updated = c + 1;
-              if (updated % 3 === 0 && onActivityCompleted) {
-                onActivityCompleted("Completed 3 Breathing Cycles");
-              }
-              return updated;
-            });
-          }
-          if (soundEnabled) {
-            soundEngine.playChime(nextIndex === 0 ? 528 : 440);
-          }
-          setPhaseIndex(nextIndex);
-          return currentPhases[nextIndex].duration;
+      const currentVal = secondsLeftRef.current;
+      if (currentVal <= 1) {
+        const nextIndex = (phaseIndexRef.current + 1) % currentPhases.length;
+        setPhaseIndex(nextIndex);
+        setSecondsLeftInPhase(currentPhases[nextIndex].duration);
+
+        if (nextIndex === 0) {
+          setCompletedCycles((prev) => {
+            const updated = prev + 1;
+            if (updated % 3 === 0 && onActivityCompletedRef.current) {
+              setTimeout(() => {
+                onActivityCompletedRef.current?.("Completed 3 Breathing Cycles");
+              }, 0);
+            }
+            return updated;
+          });
         }
-        return prev - 1;
-      });
+        if (soundEnabled) {
+          soundEngine.playChime(nextIndex === 0 ? 528 : 440);
+        }
+      } else {
+        setSecondsLeftInPhase(currentVal - 1);
+      }
     }, 1000);
 
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [isBreathing, phaseIndex, technique, currentPhases, soundEnabled, onActivityCompleted]);
+  }, [isBreathing, technique, currentPhases, soundEnabled]);
 
   const toggleBreathing = () => {
     if (!isBreathing) {
