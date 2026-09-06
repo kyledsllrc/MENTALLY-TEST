@@ -1,0 +1,6 @@
+{
+  "name": "MentAlly: Mental Wellness & Self-Care",
+  "description": "A personalized mental wellness and self-care mobile application with AI-assisted support for college students, featuring mood tracking, journaling, guided exercises, and non-clinical support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
